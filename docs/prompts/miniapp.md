@@ -49,8 +49,13 @@ packages/miniapp/  —— config/ types/ core/ components/ pages/ hooks/ api/ st
 6. 输出后跑硬编码自查（references/04）
 7. 末尾输出「改动文件清单」+「shared 同步需求（如有）」
 
-# 分支规则
-只在整合方指派的 feat/miniapp-* 分支工作，禁止自建分支、禁止改 main。
+# 分支规则（详见 DECISIONS.md D005，强制执行）
+1. 接到 prompt 后**第一动作**：`git branch -m trae/agent-* feat/miniapp-stage1`（把环境自动建的随机分支重命名为语义分支；后续阶段递增 stage2/stage3）
+2. 只在 `feat/miniapp-stageN` 提交，**禁止碰 main**（main 受保护，合并由整合方做）
+3. **禁止改 packages/shared/**（需新增/修改字段向整合方提案，整合方落地后你同步引用）
+4. **禁止跨端目录**：只动 `packages/miniapp/**`，不碰 admin/server/ai 的代码
+5. 提交用 Conventional Commits 前缀：`feat(miniapp):` / `fix(miniapp):` / `chore(miniapp):`
+6. 阶段完成向整合方报告，**合并到 main 由整合方按序执行**（顺序：shared→server→前端），你不得自行合并
 
 # 会话衔接
 每次新会话先读 .ai-context.md、DECISIONS.md、.ai-memory.md。阶段任务完成后提示整合方更新 .ai-memory.md。

@@ -59,3 +59,44 @@
 - server `auth` 模块同时支持 `WxLoginRequest` / `PhoneLoginRequest`（shared/types/user.ts 已定义）
 - 接入阿里云短信（`.env` 含 SMS_* 占位）
 - 用户表需同时存 `openid` 与 `phone`，支持两种登录方式关联同一账号
+
+## D005 · 分支策略与防乱机制（2026-06-29）
+
+**结论**：特性分支 + 整合方合并；整合方接管分支命名；合并顺序固定。
+
+**5 道防线**：
+1. **包路径物理隔离**：miniapp/admin/server/ai 各自独立目录，三端改的文件不重叠，合并零冲突
+2. **shared 整合方独占**：三端改 shared 必须提案，整合方落地，单一事实来源不分裂
+3. **整合方是合并唯一仲裁者**：三端只往 feat 分支提交，合并到 main 只能整合方做
+4. **顺序合并**：shared → server → 前端（契约先稳，前端再对齐）
+5. **Conventional Commits**：`feat(server):` / `fix(miniapp):` 前缀，追溯归属
+
+**分支模型**：
+```
+三端对话                           整合方                    origin
+──────────                         ──────────                ──────
+feat/miniapp-stageN ──┐
+feat/admin-stageN   ──┼──→ 审查 + 按序合并 ──→ main ──→ push
+feat/server-stageN  ──┘        (shared→server→前端)
+```
+
+**分支命名规则**：
+- 三端对话接到 prompt 后第一动作：`git branch -m trae/agent-* feat/{端}-stageN`
+  - 对话①：`feat/miniapp-stage1`、`feat/miniapp-stage2`...
+  - 对话②：`feat/admin-stage1`、`feat/admin-stage2`...
+  - 对话③：`feat/server-stage1`、`feat/server-stage2`...
+- main 受保护，三端禁止直接提交
+
+**三端铁律**：
+1. 只在自己的 `feat/{端}-stageN` 提交，禁止碰 main
+2. 禁止改 `packages/shared/`（提案给整合方）
+3. 禁止跨端目录（miniapp 不碰 admin/server/ai 的代码）
+4. 阶段完成向整合方报告，合并由整合方做
+
+**理由**：
+- Monorepo 包隔离使三端代码物理不交叉，"乱"的根源被消除
+- 唯一高风险文件 shared 由单点控制
+- 整合方仲裁避免三端互相覆盖、乱合
+- TRAE 沙箱会自动建 `trae/agent-*` 随机分支，必须接管命名否则后期无法追溯归属
+
+**替代方案**：dev 集成分支流（多一层维护，本项目规模不必要）/ 单分支直接提交（main 不稳，回滚难）—— 均否决

@@ -54,8 +54,13 @@ packages/admin/  —— config/ types/ core/ components/ pages/ hooks/ api/ rout
 # 权限与路由
 路由表参数化到 router/；权限路由 + 菜单状态在 store/；权限校验在 core/。状态值引用 shared/constants/business.ts，禁止硬编码数字。
 
-# 分支规则
-只在整合方指派的 feat/admin-* 分支工作，禁止自建分支、禁止改 main。
+# 分支规则（详见 DECISIONS.md D005，强制执行）
+1. 接到 prompt 后**第一动作**：`git branch -m trae/agent-* feat/admin-stage1`（把环境自动建的随机分支重命名为语义分支；后续阶段递增 stage2/stage3）
+2. 只在 `feat/admin-stageN` 提交，**禁止碰 main**（main 受保护，合并由整合方做）
+3. **禁止改 packages/shared/**（需新增/修改字段向整合方提案，整合方落地后你同步引用）
+4. **禁止跨端目录**：只动 `packages/admin/**`，不碰 miniapp/server/ai 的代码
+5. 提交用 Conventional Commits 前缀：`feat(admin):` / `fix(admin):` / `chore(admin):`
+6. 阶段完成向整合方报告，**合并到 main 由整合方按序执行**（顺序：shared→server→前端），你不得自行合并
 
 # 会话衔接
 每次新会话先读 .ai-context.md、DECISIONS.md、.ai-memory.md。阶段任务完成后提示整合方更新 .ai-memory.md。
