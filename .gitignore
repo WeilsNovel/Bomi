@@ -1,0 +1,37 @@
+# bomi Monorepo .gitignore
+
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 构建产物
+dist/
+build/
+*.tsbuildinfo
+
+# 环境变量（含密钥，禁止提交）
+.env
+.env.local
+.env.*.local
+
+# 日志
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 测试覆盖率
+coverage/
+
+# 上传文件临时区
+.uploads/

@@ -1,0 +1,4 @@
+# pnpm workspace 配置 - bomi Monorepo
+# 破例补齐：原应由整合方创建，待整合方 review/接管
+packages:
+  - 'packages/*'

@@ -1,0 +1,23 @@
+{
+  "name": "bomi",
+  "version": "0.0.0",
+  "private": true,
+  "description": "bomi - 多端协同健康饮食类项目（服务端 + AI 层 + 前端）",
+  "packageManager": "pnpm@10.28.1",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "build:shared": "pnpm --filter @bomi/shared build",
+    "build:ai": "pnpm --filter @bomi/ai build",
+    "build:server": "pnpm --filter @bomi/server build",
+    "dev:server": "pnpm --filter @bomi/server start:dev",
+    "lint": "pnpm -r --parallel run lint",
+    "typecheck": "pnpm -r --parallel run typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "@types/node": "^20.12.12"
+  }
+}

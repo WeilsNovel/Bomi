@@ -1,0 +1,17 @@
+{
+  "name": "@bomi/ai",
+  "version": "0.0.0",
+  "private": true,
+  "description": "bomi AI 调用层 - 多供应商适配（references/01 §2.8 + references/08）",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@bomi/shared": "workspace:*"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@bomi/shared",
+  "version": "0.0.0",
+  "private": true,
+  "description": "bomi 多端共享层 - 类型/枚举/常量单一事实来源（破例占位，待整合方 review/接管）",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist"
+  }
+}
